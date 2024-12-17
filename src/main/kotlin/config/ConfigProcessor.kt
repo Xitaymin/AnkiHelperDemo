@@ -2,8 +2,8 @@ package org.demotdd.config
 
 import java.util.Properties
 
-
-class ConfigReader {
+// Використовуйте цей клас для роботи з конфігураційним файлом
+class ConfigProcessor {
     private val properties = Properties()
 
     init {
@@ -14,4 +14,9 @@ class ConfigReader {
     fun getApiKey(): String {
         return properties.getProperty("deepl.api.key")
     }
+
+    fun setApiKey(key: String): Unit {
+        properties.setProperty("deepl.api.key", key)
+    }
+
 }
