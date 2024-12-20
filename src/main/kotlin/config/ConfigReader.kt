@@ -1,9 +1,8 @@
 package config
 import java.util.Properties
-import java.io.FileOutputStream
 
 // Використовуйте цей клас для роботи з конфігураційним файлом
-class ConfigProcessor {
+class ConfigReader {
     private val properties = Properties()
     private val configFileName = "config.properties"
 
@@ -16,19 +15,5 @@ class ConfigProcessor {
         properties.getProperty("deepl.api.key")
     } catch (e: Exception) {
         null
-    }
-
-    fun setApiKey(key: String) {
-        properties.setProperty("deepl.api.key", key)
-        saveProperties()
-    }
-
-    private fun saveProperties() {
-        val fileUrl = this::class.java.classLoader.getResource(configFileName)
-            ?: throw IllegalArgumentException("$configFileName not found")
-
-        FileOutputStream(fileUrl.path).use { outputStream ->
-            properties.store(outputStream, "Updated deepl.api.key")
-        }
     }
 }

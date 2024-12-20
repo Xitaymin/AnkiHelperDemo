@@ -21,7 +21,4 @@ fun main(args: Array<String>)
 	{
 		println("An error occurred: ${e.message}")
 	}
-
-	//todo yb класи для роботи з терміналом, перекладачем, вичитуванням файлів
-
 }
