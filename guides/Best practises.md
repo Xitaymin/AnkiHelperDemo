@@ -102,7 +102,68 @@ fun `should return default value if input is null`() {
 }
 ```
 
----
+## 9. Використовуйте в тестах окремий набір літералів і констант
+Не покладайтеся на значення з робочого коду. Замість цього створюйте у тестах контрольні точки, незалежні від реалізації коду.
 
-**Висновок:** Виконання цих практик допоможе створювати тести, які є ефективними, підтримуваними та стійкими до змін у коді.
+## 10. Уникайте тавтологічних тестів
+Тести повинні перевіряти результат, а не дублювати логіку алгоритму.
 
+## 11. Виносьте час у вигляді явної залежності
+Час повинен передаватися у вигляді параметра або через сервіс, а не бути частиною неявного контексту.
+
+**Приклад:**
+```kotlin
+@Test
+fun `should calculate age based on birth date`() {
+    // Підготовка
+    val birthDate = LocalDate.of(1990, 1, 1)
+    val currentDate = LocalDate.of(2024, 1, 1)
+    val expectedAge = 34
+
+    // Дія
+    val actualAge = calculateAge(birthDate, currentDate)
+
+    // Перевірка
+    assertThat(actualAge).isEqualTo(expectedAge)
+}
+```
+
+## 12. Використовуйте шаблон Object Mother для підготовки даних
+Object Mother забезпечує створення об'єктів для тестів у зручному форматі.
+
+**Приклад:**
+```kotlin
+object TestDataMother {
+    fun createUser(name: String = "Користувач", age: Int = 25): User {
+        return User(name, age)
+    }
+}
+
+@Test
+fun `should create user correctly`() {
+    // Підготовка
+    val user = TestDataMother.createUser(name = "Іван")
+
+    // Дія
+    val result = user.isAdult()
+
+    // Перевірка
+    assertThat(result).isTrue()
+}
+```
+
+## 13.Використовуйте fluent-інтерфейс для перевірки
+Fluent інтерфейс робить перевірки читабельними й легкими для розуміння.
+
+**Приклад:**
+```kotlin
+    @Test
+fun `should verify multiple order properties with fluent interface`() {
+    // Підготовка
+    val order = Order(id = 5, items = listOf("item1", "item2", "item3"), total = 150.0)
+
+    order.items should (haveSize(3) and containExactlyInAnyOrder("item1", "item2", "item3"))
+    order.total.shouldBeExactly(150.0)
+    order.isValid() shouldBe true
+}
+```
